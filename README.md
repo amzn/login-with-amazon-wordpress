@@ -53,7 +53,7 @@ If none of these apply to you, we suggest [the Quick & Easy approach](#install-p
 If you have a custom process, these instructions may need to be modified slightly to fit your deployment process.
 
 1. Create a backup.
-2. [Download the plugin](https://github.com/BuildRX/wordpress_login_with_amazon/raw/master/build/loginwithamazon.zip).
+2. [Download the plugin](https://github.com/amzn/login-with-amazon-wordpress/raw/master/build/loginwithamazon.zip).
 3. Extract the zip file.
 4. Copy the *loginwithamazon* directory to your *wp-content/plugins* directory.
 5. Test as desired.
@@ -62,7 +62,7 @@ If you have a custom process, these instructions may need to be modified slightl
 ## Install Plugin (Quick & Easy)
 It is important that you create a backup before installing any extensions, including this one.
 
-1. [Download the plugin](https://github.com/BuildRX/wordpress_login_with_amazon/raw/master/build/loginwithamazon.zip).
+1. [Download the plugin](https://github.com/amzn/login-with-amazon-wordpress/raw/master/build/loginwithamazon.zip).
 2. Log in to your WordPress control panel.
 3. In the side bar select Plugins: Add New
 4. From the top of the page select Upload Plugin.
