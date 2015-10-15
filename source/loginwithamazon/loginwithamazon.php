@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Login With Amazon
- * Plugin URI: https://github.com/amzn/wordpress_login_with_amazon
+ * Plugin URI: https://github.com/amzn/login-with-amazon-wordpress
  * Description: Login With Amazon support for WordPress.
  * Version: 1.0.0
- * Author: BuildRX
- * Author URI: http://www.buildrx.com/
+ * Author: Login with Amazon
+ * Author URI: https://login.amazon.com/
  * License: Apache 2.0
- * Amazon Login - Login for WordPress
+ * Amazon Login - Amazon Login for WordPress
  * @category    Amazon
  * @package     Amazon_Login
  * @copyright   Copyright (c) 2015 Amazon.com
