@@ -13,10 +13,10 @@ Login with Amazon for Wordpress
 == Description ==
 
 About Plugin:
-Login with Amazon plugin for Drupal allows your website to quickly and easily integrate with Login with Amazon. You install the plugin on your website in minutes, and customers can login right away.
+Login with Amazon plugin for WordPress allows your website to quickly and easily integrate with Login with Amazon. You can install the plugin on your website in minutes, and customers can login right away.
 
 About Login with Amazon:
-Login with Amazon enables over 250 million active Amazon.com customers to securely and easily logon to websites and apps using their Amazon.com account. This reduces sign-up friction by eliminating the need for users to create an account and password on your website or app, facilitating higher engagement and order conversion for merchants using Login and Pay with Amazon.
+Login with Amazon enables over 250 million active Amazon.com customers to securely and easily logon to websites using their Amazon.com account. This reduces sign-up friction by eliminating the need for users to create an account and password on your website, facilitating higher engagement and order conversion for merchants using Login and Pay with Amazon.
 
 Why should I use Login with Amazon?
 Studies show that:
@@ -32,7 +32,8 @@ No more security concerns:
 Your website is as secure as the least secured website where customers used the same password . Hackers are consistently finding new ways to breach systems and steal customer data, and your website needs a robust and consistently evolving authentication system to protect customer data.
 Using Login with Amazon, you can leverage the same secure authentication and authorization systems used by Amazon, reduce the operational hassle of frequent password resets for the customers, and prevent lost traffic when customers leave the website after forgetting passwords.
 Download the plugin now, and get started in minutes!
-Amazon, Amazon.com and the Amazon.com logo are registered trademarks of Amazon.com, Inc. or its affiliates.
+
+Amazon, Amazon.com, and the Amazon.com logo are registered trademarks of Amazon.com, Inc. or its affiliates.
 
 
 
