@@ -1,3 +1,11 @@
+/**
+ * Amazon Login - Login for WordPress
+ *
+ * @category    Amazon
+ * @package     Amazon_Login
+ * @copyright   Copyright (c) 2015 Amazon.com
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
 jQuery(function() {
     // Remove any fields not related to the reregister process
     jQuery('label[for="user_login"]').parent().remove();
