@@ -7,7 +7,7 @@
 
 ## Register Your Application
 
-First, you will need to register your website as an Application on the App Console.
+First, you will need to register your website as an Application on the App Console. You can find a link to the App Console at the following address: https://login.amazon.com.
 
 #### Register Your Login with Amazon Application
 1. In the App Console register a new application by clicking the Register new Application button. The Register Your Application form will appear.
