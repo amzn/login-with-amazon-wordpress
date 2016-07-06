@@ -55,7 +55,7 @@ If you have a custom process, these instructions may need to be modified slightl
 1. Create a backup.
 2. [Download the plugin](https://github.com/amzn/login-with-amazon-wordpress/archive/master.zip).
 3. Extract the zip file.
-4. Copy the *loginwithamazon* directory to your *wp-content/plugins* directory.
+4. Copy the extracted folder to your *wp-content/plugins* directory.
 5. Test as desired.
 6. Upload the changes to your live site.
 
