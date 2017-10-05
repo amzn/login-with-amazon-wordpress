@@ -19,7 +19,10 @@ define('LOGINWITHAMAZON__PLUGIN_URL', plugin_dir_url( __FILE__ ));
 
 add_option('loginwithamazon_client_id', '', '', 'yes');
 
-require_once LOGINWITHAMAZON__PLUGIN_DIR . 'options.php';
+if ( is_admin() ) {
+    require_once LOGINWITHAMAZON__PLUGIN_DIR . 'options.php';
+}
+
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'utility.php';
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_button.php';
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_process.php';
