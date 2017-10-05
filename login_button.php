@@ -26,7 +26,7 @@ function loginwithamazon_add_footer_script() {
         $popup = 'true';
     }
 
-    $csrf = LoginWithAmazonUtility::hmac($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]);
+    $csrf = LoginWithAmazonUtility::hmac( LoginWithAmazonUtility::getCsrfAuthenticator() );
 
     ?>
     <div id="amazon-root"></div>

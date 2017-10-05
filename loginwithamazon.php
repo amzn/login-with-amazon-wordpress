@@ -28,16 +28,3 @@ require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_button.php';
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_process.php';
 
 add_filter( 'registration_errors', array('LoginWithAmazonUtility', 'registrationErrors'), 1, 3 );
-add_action('init', 'loginwithamazon_init_sessions');
-
-function loginwithamazon_init_sessions() {
-    if(!headers_sent() && session_id() == '') {
-        session_start();
-    }
-
-    // Set a CSRF authenticator if none exists
-    if ( !isset($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]) ) {
-        $authenticator = wp_generate_password(64);
-        $_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] = $authenticator;
-    }
-}

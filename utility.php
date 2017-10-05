@@ -60,6 +60,13 @@ class LoginWithAmazonUtility {
         return ($get) ?: $post;
     }
 
+    /**
+     * Generate a CSRF token on demand.
+     * @return string
+     */
+    public static function getCsrfAuthenticator() {
+        return wp_create_nonce( self::$CSRF_AUTHENTICATOR_KEY );
+    }
 
     /**
      * Generates an HMAC key for the CSRF tokens
@@ -79,13 +86,8 @@ class LoginWithAmazonUtility {
      * @return bool
      */
     public static function verifyCsrfToken($token) {
-        if ( isset($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]) ) {
-            $true_token = self::hmac( $_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] );
-
-            return strcmp($token, $true_token) === 0;
-        }
-
-        return false;
+        $true_token = self::hmac( self::getCsrfAuthenticator() );
+        return strcmp($token, $true_token) === 0;
     }
 
 
