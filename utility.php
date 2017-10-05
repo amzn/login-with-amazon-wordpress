@@ -41,7 +41,7 @@ class LoginWithAmazonUtility {
     }
 
     /**
-     * @return null|WP_Post
+     * @return string|null
      */
     public static function getAcessToken() {
         $get = (isset($_GET['access_token'])) ? $_GET['access_token'] : null;
@@ -51,7 +51,7 @@ class LoginWithAmazonUtility {
     }
 
     /**
-     * @return null|WP_Post
+     * @return string|null
      */
     public static function getCsrfToken() {
         $get = (isset($_GET['state'])) ? $_GET['state'] : null;
