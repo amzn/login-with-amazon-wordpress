@@ -65,7 +65,19 @@ class LoginWithAmazonUtility {
      * @return string
      */
     public static function getCsrfAuthenticator() {
-        return wp_create_nonce( self::$CSRF_AUTHENTICATOR_KEY );
+        $nonce = self::sessionNonce();
+        return wp_create_nonce( self::$CSRF_AUTHENTICATOR_KEY . $nonce );
+    }
+
+    public static function sessionNonce() {
+        $cookie = 'loginwithamazon_nonce';
+        if ( isset( $_COOKIE[$cookie] ) ) {
+            $nonce = $_COOKIE[$cookie];
+        } else {
+            $nonce = wp_generate_password(64);
+            setcookie( $cookie, $nonce, 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+        }
+        return $nonce;
     }
 
     /**
@@ -99,7 +111,7 @@ class LoginWithAmazonUtility {
      */
     public static function getEmailFromAccessToken($accessToken) {
         $result = self::json_curl_wrapper('https://api.amazon.com/auth/o2/tokeninfo?access_token=' . urlencode($accessToken));
-        if (!isset($result['aud']) || $result['aud'] != get_option('loginwithamazon_client_id')) {
+        if (!isset($result['aud']) || $result['aud'] != get_option('loginwithamazon_client_id', '')) {
             return false;
         }
 
