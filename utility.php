@@ -19,6 +19,8 @@ class LoginWithAmazonUtility {
     private static $login_error_msg = "";
     private static $login_error_add = "";
 
+    private static $session_nonce;
+
 
     /**
      * @return bool
@@ -72,10 +74,12 @@ class LoginWithAmazonUtility {
     public static function sessionNonce() {
         $cookie = 'loginwithamazon_nonce';
         if ( isset( $_COOKIE[$cookie] ) ) {
-            $nonce = $_COOKIE[$cookie];
+            self::$session_nonce = $_COOKIE[$cookie];
         } else {
-            $nonce = wp_generate_password(64);
-            setcookie( $cookie, $nonce, 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+            if ( !headers_sent() ) {
+                self::$session_nonce = wp_generate_password(64);
+                setcookie( $cookie, self::$session_nonce, 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+            }
         }
         return $nonce;
     }
