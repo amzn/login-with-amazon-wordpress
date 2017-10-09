@@ -81,7 +81,7 @@ class LoginWithAmazonUtility {
                 setcookie( $cookie, self::$session_nonce, 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
             }
         }
-        return $nonce;
+        return self::$session_nonce;
     }
 
     /**
