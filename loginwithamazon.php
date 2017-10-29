@@ -21,20 +21,59 @@ add_option('loginwithamazon_client_id', '', '', 'yes');
 
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'options.php';
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'utility.php';
-require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_button.php';
 require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_process.php';
 
 add_filter( 'registration_errors', array('LoginWithAmazonUtility', 'registrationErrors'), 1, 3 );
-add_action('init', 'loginwithamazon_init_sessions');
 
-function loginwithamazon_init_sessions() {
-    if(!headers_sent() && session_id() == '') {
-        session_start();
+LoginWithAmazon::setup();
+
+class LoginWithAmazon {
+    static function setup() {
+        add_action( 'login_init',                            array( __CLASS__, 'load_login_button' ) );
+        add_action( 'wp_ajax_loginwithamazon_config',        array( __CLASS__, 'ajax_config' ) );
+        add_action( 'wp_ajax_nopriv_loginwithamazon_config', array( __CLASS__, 'ajax_config' ) );
     }
 
-    // Set a CSRF authenticator if none exists
-    if ( !isset($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]) ) {
-        $authenticator = wp_generate_password(64);
-        $_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] = $authenticator;
+    static function load_login_button() {
+        if ( ! get_option('loginwithamazon_client_id') ) {
+            return;
+        }
+
+        require_once LOGINWITHAMAZON__PLUGIN_DIR . 'login_button.php';
+
+        // For future shortcode and skinned login page support
+        add_action('wp_enqueue_scripts', 'loginwithamazon_enqueue_script');
+        add_action('wp_footer', 'loginwithamazon_add_footer_script');
+
+        // For login page
+        add_action('login_enqueue_scripts', 'loginwithamazon_enqueue_script');
+        add_action('login_footer', 'loginwithamazon_add_footer_script');
     }
+
+    static function ajax_config() {
+        $config = array(
+            'ssl' => is_ssl(),
+            'client_id' => get_option('loginwithamazon_client_id'),
+            'logout' => !empty( $_GET['logout'] ),
+            'options' => array(
+                'scope' => 'profile',
+                'state' => LoginWithAmazonUtility::createCsrfToken(),
+                'popup' => is_ssl()
+            ),
+            'redirect' => site_url( 'wp-login.php?amazonLogin=1', 'https' )
+        );
+
+        if ( isset( $_GET['callback'] ) ) {
+            // JSON-P response
+            $callback = wp_unslash( $_GET['callback'] );
+            $arg = wp_json_encode( $config );
+            header( 'Content-type: application/javascript; charset=' . get_option( 'blog_charset' ) );
+            echo "$callback( $arg );";
+            exit();
+        } else {
+            // JSON response
+            wp_send_json( $config );
+        }
+    }
+
 }
