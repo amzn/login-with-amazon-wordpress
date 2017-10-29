@@ -10,11 +10,19 @@ function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
 r(function(){
     var formTargetIDs = ['registerform', 'loginform'];
     var idx;
+    var found;
+
     for (idx = 0; idx < formTargetIDs.length; ++idx) {
         var formElement = document.getElementById(formTargetIDs[idx]);
         if(formElement) {
+            found = true;
             addLoginToForm(formElement, idx);
         }
+    }
+
+    if ( found ) {
+        var url = loginwithamazon.ajaxurl + '&ts=' + Date.now();
+        loginwithamazon_script( url, window.document.getElementsByTagName('head')[0], 'loginwithamazon' );
     }
 });
 
@@ -43,4 +51,29 @@ function buildLoginElement(idx) {
     loginElement.style.textAlign = 'center';
     loginElement.innerHTML = '<a href="#" id="LoginWithAmazon-' + idx + '" style="display:inline-block;"><img border="0" alt="Login with Amazon" src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png" width="156" height="32" style="display:block;" /></a>';
     return loginElement;
+}
+
+function activateLoginWithAmazonButtons(elementId) {
+    document.getElementById(elementId).onclick = function() {
+        amazon.Login.authorize( cfg.options, cfg.redirect );
+        return false;
+    };
+}
+
+function loginwithamazon_loader( cfg ) {
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId(cfg.client_id);
+        amazon.Login.setUseCookie(true);
+        cfg.logout && amazon.Login.logout();
+    };
+
+    loginwithamazon_script( 'https://api-cdn.amazon.com/sdk/login1.js', getElementById('amazon-root'), 'amazon-login-sdk' );
+}
+
+function loginwithamazon_script( url, container, id ) {
+    var a = document.createElement('script');
+    a.type = 'text/javascript'; a.async = true;
+    id && a.id = 'amazon-login-sdk';
+    a.src = url;
+    container && container.appendChild(a);
 }
