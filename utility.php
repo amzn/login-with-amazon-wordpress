@@ -87,7 +87,7 @@ class LoginWithAmazonUtility {
         static $auth;
 
         if ( !isset( $auth ) ) {
-            if ( isset( $_COOKIE[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] ) {
+            if ( isset( $_COOKIE[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] ) ) {
                 $auth = $_COOKIE[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY];
             } else {
                 $auth = self::setAuthenticatorKey();

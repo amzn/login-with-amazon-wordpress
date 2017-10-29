@@ -73,7 +73,9 @@ function loginwithamazon_loader( cfg ) {
 function loginwithamazon_script( url, container, id ) {
     var a = document.createElement('script');
     a.type = 'text/javascript'; a.async = true;
-    id && a.id = 'amazon-login-sdk';
+    if ( id ) {
+        a.id = 'amazon-login-sdk';
+    }
     a.src = url;
     container && container.appendChild(a);
 }
