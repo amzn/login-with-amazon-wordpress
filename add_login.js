@@ -54,6 +54,7 @@ function buildLoginElement(idx) {
 }
 
 function activateLoginWithAmazonButtons(elementId) {
+    var cfg = window.loginwithamazon_config;
     document.getElementById(elementId).onclick = function() {
         amazon.Login.authorize( cfg.options, cfg.redirect );
         return false;
@@ -61,6 +62,7 @@ function activateLoginWithAmazonButtons(elementId) {
 }
 
 function loginwithamazon_loader( cfg ) {
+    window.loginwithamazon_config = cfg;
     window.onAmazonLoginReady = function() {
         amazon.Login.setClientId(cfg.client_id);
         amazon.Login.setUseCookie(true);
