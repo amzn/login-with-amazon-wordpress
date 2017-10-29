@@ -12,10 +12,10 @@ defined('ABSPATH') or die('Access denied');
 
 function loginwithamazon_enqueue_script() {
     $config = array(
-        'ajaxurl' => admin_url( 'admin-ajax.php?callback=loginwithamazon_loader', 'https' )
+        'ajaxurl' => admin_url( 'admin-ajax.php?action=loginwithamazon_config&callback=loginwithamazon_loader', 'https' )
     );
-    wp_localize_script( 'loginwithamazon', 'loginwithamazon', $config );
     wp_enqueue_script('loginwithamazon', LOGINWITHAMAZON__PLUGIN_URL . 'add_login.js', array(), '1.0', true );
+    wp_localize_script( 'loginwithamazon', 'loginwithamazon', $config );
 }
 
 function loginwithamazon_add_footer_script() {

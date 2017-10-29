@@ -104,8 +104,7 @@ class LoginWithAmazonUtility {
     }
 
     public static function createCsrfToken() {
-        //    $csrf = LoginWithAmazonUtility::hmac($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]);
-
+	return self::hmac( self::getAuthenticatorKey() );
     }
 
     /**

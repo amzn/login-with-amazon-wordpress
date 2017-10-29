@@ -67,7 +67,7 @@ function loginwithamazon_loader( cfg ) {
         cfg.logout && amazon.Login.logout();
     };
 
-    loginwithamazon_script( 'https://api-cdn.amazon.com/sdk/login1.js', getElementById('amazon-root'), 'amazon-login-sdk' );
+    loginwithamazon_script( 'https://api-cdn.amazon.com/sdk/login1.js', document.getElementById('amazon-root'), 'amazon-login-sdk' );
 }
 
 function loginwithamazon_script( url, container, id ) {
