@@ -79,15 +79,33 @@ class LoginWithAmazonUtility {
      * @return bool
      */
     public static function verifyCsrfToken($token) {
-        if ( isset($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]) ) {
-            $true_token = self::hmac( $_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] );
-
-            return strcmp($token, $true_token) === 0;
-        }
-
-        return false;
+        $true_token = self::hmac( self::getAuthenticatorKey() );
+        return strcmp($token, $true_token) === 0;
     }
 
+    public static function getAuthenticatorKey() {
+        static $auth;
+
+        if ( !isset( $auth ) ) {
+            if ( isset( $_COOKIE[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] ) ) {
+                $auth = $_COOKIE[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY];
+            } else {
+                $auth = self::setAuthenticatorKey();
+            }
+        }
+
+        return $auth;
+    }
+
+    public static function setAuthenticatorKey() {
+        $auth = wp_generate_password(64);
+        setcookie( LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY, $auth, 0, COOKIEPATH, COOKIE_DOMAIN, true );
+        return $auth;
+    }
+
+    public static function createCsrfToken() {
+	return self::hmac( self::getAuthenticatorKey() );
+    }
 
     /**
      * Get user email address from Amazon access token.
