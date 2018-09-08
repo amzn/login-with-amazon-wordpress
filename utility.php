@@ -19,6 +19,8 @@ class LoginWithAmazonUtility {
     private static $login_error_msg = "";
     private static $login_error_add = "";
 
+    private static $session_nonce;
+
 
     /**
      * @return bool
@@ -41,7 +43,7 @@ class LoginWithAmazonUtility {
     }
 
     /**
-     * @return null|WP_Post
+     * @return string|null
      */
     public static function getAcessToken() {
         $get = (isset($_GET['access_token'])) ? $_GET['access_token'] : null;
@@ -51,7 +53,7 @@ class LoginWithAmazonUtility {
     }
 
     /**
-     * @return null|WP_Post
+     * @return string|null
      */
     public static function getCsrfToken() {
         $get = (isset($_GET['state'])) ? $_GET['state'] : null;
@@ -60,6 +62,27 @@ class LoginWithAmazonUtility {
         return ($get) ?: $post;
     }
 
+    /**
+     * Generate a CSRF token on demand.
+     * @return string
+     */
+    public static function getCsrfAuthenticator() {
+        $nonce = self::sessionNonce();
+        return wp_create_nonce( self::$CSRF_AUTHENTICATOR_KEY . $nonce );
+    }
+
+    public static function sessionNonce() {
+        $cookie = 'loginwithamazon_nonce';
+        if ( isset( $_COOKIE[$cookie] ) ) {
+            self::$session_nonce = $_COOKIE[$cookie];
+        } else {
+            if ( !headers_sent() ) {
+                self::$session_nonce = wp_generate_password(64);
+                setcookie( $cookie, self::$session_nonce, 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+            }
+        }
+        return self::$session_nonce;
+    }
 
     /**
      * Generates an HMAC key for the CSRF tokens
@@ -79,13 +102,8 @@ class LoginWithAmazonUtility {
      * @return bool
      */
     public static function verifyCsrfToken($token) {
-        if ( isset($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]) ) {
-            $true_token = self::hmac( $_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY] );
-
-            return strcmp($token, $true_token) === 0;
-        }
-
-        return false;
+        $true_token = self::hmac( self::getCsrfAuthenticator() );
+        return strcmp($token, $true_token) === 0;
     }
 
 
@@ -97,7 +115,7 @@ class LoginWithAmazonUtility {
      */
     public static function getEmailFromAccessToken($accessToken) {
         $result = self::json_curl_wrapper('https://api.amazon.com/auth/o2/tokeninfo?access_token=' . urlencode($accessToken));
-        if (!isset($result['aud']) || $result['aud'] != get_option('loginwithamazon_client_id')) {
+        if (!isset($result['aud']) || $result['aud'] != get_option('loginwithamazon_client_id', '')) {
             return false;
         }
 

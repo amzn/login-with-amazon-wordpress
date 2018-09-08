@@ -1,14 +1,14 @@
 === Login with Amazon ===
 Contributors: Login with Amazon
-Tags: amazon, login, login with amazon, access, authentication, content, password, protect, register, registration, restriction, subscriber
+Tags: amazon, login, login with amazon, access, authentication, password, protect, register, registration, restriction
 Requires at least: 3.0.1
-Tested up to: 4.3.1
-Stable tag: 4.3
+Tested up to: 4.8.0
+Stable tag: 4.8.0
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
 
-Login with Amazon for Wordpress
+Reduce Registration Friction. Improve Cart Conversion.
 
 == Description ==
 

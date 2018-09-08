@@ -10,6 +10,7 @@
 defined('ABSPATH') or die('Access denied');
 
 if(get_option('loginwithamazon_client_id') && get_option('loginwithamazon_client_id') != '') {
+	add_action( 'init', array( 'LoginWithAmazonUtility', 'sessionNonce' ) );
     add_action('wp_enqueue_scripts', 'loginwithamazon_enqueue_script');
     add_action('login_enqueue_scripts', 'loginwithamazon_enqueue_script');
     add_action('wp_footer', 'loginwithamazon_add_footer_script');
@@ -26,7 +27,7 @@ function loginwithamazon_add_footer_script() {
         $popup = 'true';
     }
 
-    $csrf = LoginWithAmazonUtility::hmac($_SESSION[LoginWithAmazonUtility::$CSRF_AUTHENTICATOR_KEY]);
+    $csrf = LoginWithAmazonUtility::hmac( LoginWithAmazonUtility::getCsrfAuthenticator() );
 
     ?>
     <div id="amazon-root"></div>
